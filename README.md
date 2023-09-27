@@ -1,10 +1,15 @@
+# Under heavy construction thus the API is still very unstable.
+# Check back occasionally
+
 ## ledd
 `ledd` (pronounced led-dy) is a line-oriented text editor in the spirit of Unix `ed` but it daemonizes (and looks nicer): thus, `ledd` mean `l`ittle `ed`itor that `d`aemonizes. Since it daemonizes, you interact with it via a client that takes commands from the shell. Written in Rust.
 
 ### Features
+#### Basically my TODO list
  - [ ] background process that can manage multiple buffers at once
  - [ ] show cursor position on the current line
- - [ ] the client does the line printing
+ - [ ] lightweight and similar commands to `ed`
+ - [ ] the client/tui does the line printing via gRPC
  - [ ] uses gRPC
 
 ### Why?
@@ -16,3 +21,4 @@ Here are some of the reasons I'm starting this project:
 - experiment and learn how TUIs work
 - learn my way around git and github workflow eg patching,rebasing,prs, etc
 - learn some design patterns, software engineering concepts
+
