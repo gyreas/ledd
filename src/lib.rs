@@ -27,39 +27,38 @@ impl Cursor {
 #[derive(Debug)]
 pub struct Line {
     pub text: String,
-    pub cursor: Option<Cursor>,
     pub line_number: u32,
 }
 
 impl Line {
-    fn new(text: String, cursor: Option<Cursor>, line_number: u32) -> Line {
+    fn new(text: String, line_number: u32) -> Line {
         Line {
             text,
-            cursor,
+            // cursor,
             line_number,
         }
     }
 
-    fn has_focus(&self) -> bool {
-        self.cursor.is_some()
-    }
-    fn get_cursor_pos(&self) -> u32 {
-        if let Some(cs) = &self.cursor {
-            cs.get_pos()
-        } else {
-            panic!("No cursor!");
-        }
-    }
+    // fn has_focus(&self) -> bool {
+    //     self.cursor.is_some()
+    // }
+    // fn get_cursor_pos(&self) -> u32 {
+    //     if let Some(cs) = &self.cursor {
+    //         cs.get_pos()
+    //     } else {
+    //         panic!("No cursor!");
+    //     }
+    // }
 
-    fn print_line(&self) {
-        if let Some(cs) = &self.cursor {
-            cs.print_pos();
-            println!("{}", self.text);
-            cs.print_pos();
-        } else {
-            println!("{}", self.text);
-        }
-    }
+    // fn print_line(&self) {
+    //     if let Some(cs) = &self.cursor {
+    //         cs.print_pos();
+    //         println!("{}", self.text);
+    //         cs.print_pos();
+    //     } else {
+    //         println!("{}", self.text);
+    //     }
+    // }
 }
 
 // use Builder pattern
@@ -74,31 +73,30 @@ pub struct Buffer {
 impl Buffer {
     pub fn empty() -> Buffer {
         Buffer {
-            filename: String::new(),
+            filename: "EMPTY".to_string(),
             lines: Vec::new(),
             line_count: 0,
         }
     }
 
-    pub fn init(filename: String, text: String) -> Buffer {
+    pub fn init(filename: &str, text: String) -> Buffer {
         let mut lines = Vec::new();
         for (i, line) in text.split_terminator('\n').enumerate() {
             lines.push(Line {
                 text: line.to_owned(),
-                cursor: if i == 0 { Some(Cursor::new('=')) } else { None },
                 line_number: (i as u32),
             })
         }
 
         let line_count = lines.len();
         Buffer {
-            filename,
+            filename: filename.to_string(),
             lines,
             line_count,
         }
     }
-    pub fn set_filename(&mut self, filename: String) {
-        self.filename = filename;
+    pub fn set_filename(&mut self, filename: &str) {
+        self.filename = filename.to_string();
     }
 
     // pub fn goto_next_line(&self) -> {}
@@ -107,22 +105,22 @@ impl Buffer {
     //     line
     // }
 
-    fn get_focused_line(&self) -> Option<&Line> {
-        self.lines.iter().find(|&line| line.has_focus())
-    }
+    // fn get_focused_line(&self) -> Option<&Line> {
+    //     self.lines.iter().find(|&line| line.has_focus())
+    // }
 
     // TODO
-    fn update_lines(&mut self, anchor: u32) {
-        self.lines
-            .iter()
-            .filter(|&line| line.line_number > anchor)
-            .col;
-    }
-    pub fn insert_line_with_text(&mut self, text: String) -> u32 {
-        let curr_pos = self.get_focused_line().unwrap().line_number;
-        self.lines.push(Line::new(text, None, curr_pos + 1));
-        curr_pos
-    }
+    // fn update_lines(&mut self, anchor: u32) {
+    //     self.lines
+    //         .iter()
+    //         .filter(|&line| line.line_number > anchor)
+    //         .col;
+    // }
+    // pub fn insert_line_with_text(&mut self, text: String) -> u32 {
+    //     let curr_pos = self.get_focused_line().unwrap().line_number;
+    //     self.lines.push(Line::new(text, curr_pos + 1));
+    //     curr_pos
+    // }
 
     // fishy naming here
     pub fn insert_line_at_pos(&mut self, line: String, line_number: u32) {
@@ -137,7 +135,6 @@ impl Buffer {
             {
                 let line = Line {
                     text: line,
-                    cursor: None,
                     line_number,
                 };
                 self.lines.push(line);
@@ -145,8 +142,8 @@ impl Buffer {
         }
     }
 
-    pub fn get_filename(&self) -> String {
-        self.filename.clone()
+    pub fn get_filename(&self) -> &str {
+        self.filename.as_str()
     }
 
     pub fn nth_line(&self, n: u32) -> Option<&Line> {
