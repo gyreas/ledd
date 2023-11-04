@@ -1,5 +1,5 @@
-# Under heavy construction thus the API is still very unstable.
-# Check back occasionally
+> Under heavy construction thus the API is still very unstable.
+> Check back occasionally
 
 ## ledd
 `ledd` (pronounced led-dy) is a line-oriented text editor in the spirit of Unix `ed` but it daemonizes (and looks nicer): thus, `ledd` mean `l`ittle `ed`itor that `d`aemonizes. Since it daemonizes, you interact with it via a client that takes commands from the shell. Written in Rust.

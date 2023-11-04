@@ -1,4 +1,7 @@
 use ledd::*;
+mod tiny;
+use crossterm::Result;
+use tiny::*;
 
 fn main() {
     let text =
@@ -9,4 +12,7 @@ fn main() {
     let emb = Buffer::empty();
     println!("{:?}", b);
     println!("{:?}", emb);
+fn main() -> Result<()> {
+    tiny_input()?;
+    Ok(())
 }
