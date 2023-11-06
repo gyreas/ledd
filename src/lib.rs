@@ -1,3 +1,5 @@
+pub mod tiny;
+
 // WARN: spaghetti code
 // TODO: create a new branch, use a different implementation
 
